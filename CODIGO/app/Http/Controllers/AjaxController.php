@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Log;
 use App\Models\Usuarios as Usuarios;
 use App\Models\Butacas as Butacas;
 
@@ -19,6 +20,7 @@ class AjaxController extends Controller
 		$butacas=new Butacas;
 		$butacas::whereIn('id', explode(",", $request->ids))
 		->update(['estado' => '1', 'usuarios_id' => $request->id_usuario]);
+		Log::channel('single')->info("Reservadas las mesas (".$request->ids.") para el usuario ID: ".$request->id_usuario);
 	}
 
 	public function delreserva (Request $request){
